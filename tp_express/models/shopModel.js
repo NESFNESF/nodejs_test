@@ -31,7 +31,9 @@ var shopSchema = new Schema({
         type : String,
         require : true
     },
-    categoryList : [{type : Schema.Types.ObjectId, ref : 'Category'}]
+    categoryList : [{type : Number,
+        require : true
+    }]
 
 });
 

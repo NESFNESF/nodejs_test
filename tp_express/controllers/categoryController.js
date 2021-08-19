@@ -1,24 +1,19 @@
-const uuidv4 = require('uuid').v4();
+
 
 const categoryModel = require("../models/categoryModel");
 
-function generateId(){
-    var found = false,
-        sym ='azertyuiopmlkjhgfdsqwxcvbn',
-        str = '';
-
-        for(var i = 0; i< 14 ; i++){
-            str += sym[parseInt(Math.random()*(sym.length))];
-        }
-        return str;
-}
 
 
 
 const createCategory =  function (req , res){
-     const id = require('uuid').v4();
+    req.context.category.find(function(err,categories){
+        if(err){
+            return  err;
+        }
+         
+        const idl = categories.length + 1 ;
      const category = {
-        id,
+        id : idl,
         name : req.body.name,
         description : req.body.description,
         imageUrl : req.body.imageUrl
@@ -26,14 +21,19 @@ const createCategory =  function (req , res){
      var newCategory = new categoryModel(category);
      newCategory.save(function (err) {
     if (err) {
-      return err;
+      return consloe.log(err);
     }
-    console.log('New category: ' + newCategory );
+    console.log('New category: ' + category );
+    return res.send( category);
   } );
-     return res.send( req.Body); 
+      
+    });
+
+    
+
 };
 const listCategory = function (req , res){
-    categories =  req.context.category.find(function(err,categories){
+    req.context.category.find(function(err,categories){
         if(err){
             return  err;
         }
@@ -42,16 +42,17 @@ const listCategory = function (req , res){
     
 };
 const deleteCategory =  function (req , res){
-    req.context.category.remove({id : req.params.id},function(err){
+    req.context.category.remove({id : req.params.id},function(err,elem){
          if(err){
             return  err;
         };
         console.log("l'élement d'ID " + req.params.id +" a bien été supprimer");
+         return res.send(elem);
     });
 }
 
 const updateCategorie = function (req , res){
-    req.context.category.findOne({'id' : req.params.id},function(err,elem){
+    req.context.category.findOne({id : req.params.id},function(err,elem){
         if(err){
             return  err;
         }
@@ -63,20 +64,22 @@ const updateCategorie = function (req , res){
     if (err) {
       return err;
     }
-    console.log('Update category: ' + req.body );
+    console.log('Update category: ' + elem );
+    return res.send(elem);
   } );
 
-        return res.send(req.body);
-    })
+        
+    });
 }
 
 const oneCategory = function (req , res){
-    elem =  req.context.category.find({'id' : req.params.id},function(err){
+    req.context.category.find({id : req.params.id},function(err,elem){
         if(err){
-            return  err;
+            return  console.log(err);
         }
+        return res.send(elem);
     });
-      return res.send(elem);
+      
 }
 
 module.exports = {

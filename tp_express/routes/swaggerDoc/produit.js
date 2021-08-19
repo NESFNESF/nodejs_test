@@ -34,10 +34,10 @@
 *             type: string
 *             description: Le lien vers l'image d'un Produit
 *           price:
-*             type: number
+*             type: integer
 *             description: Le prix d'un Produit
 *           shopid:
-*             type: number
+*             type: integer
 *             description: l'identifiant de la boutique du produit
 *          
 *         example:
@@ -140,6 +140,13 @@
 *     get:
 *       summary: Liste de tous les Produits d'une boutique
 *       tags: [Produit]
+*       parameters:
+*         - in: path
+*           name: id
+*           schema:
+*             type: integer
+*           required: true
+*           description: l'identifiant d'une boutique
 *       responses:
 *         "200":
 *           description: La liste des Produits d'une boutique d'ID .

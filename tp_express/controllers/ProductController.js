@@ -14,9 +14,15 @@ function generateId(){
 }
 
 const createProduit =  function  (req , res){
-     const id =  require('uuid').v4();
+
+    req.context.produit.find(function(err,produits){
+        if(err){
+            return  err;
+        }
+      
+        const idd =  produits.length + 1;
      const Produit = {
-        id,
+        id : idd,
         name : req.body.name,
         description : req.body.description,
         imageUrl : req.body.imageUrl,
@@ -29,26 +35,30 @@ const createProduit =  function  (req , res){
     if (err) {
       return err;
     }
-    console.log('New Produit: ' + newProduit );
+    console.log('New Produit: ' + Produit );
+    return res.send( Produit);
   } );
-     return res.send( req.Body);
+     
+
+    });
+     
 };
 const listProduit = function (req , res){
-    Produits =  req.context.Produit.find(function(err,Produits){
+    req.context.produit.find(function(err,Produits){
         if(err){
             return  err;
         }
-      
          return  res.send(Produits);
     });
    
 };
 const deleteProduit= function (req , res){
-    req.context.produit.remove({id : req.params.id},function(err){
+    req.context.produit.remove({id : req.params.id},function(err,elem){
          if(err){
             return  err;
         };
         console.log("le Produit d'ID " + req.params.id +" a bien été supprimer");
+         return res.send(elem);
     });
 }
 
@@ -66,30 +76,34 @@ const updateProduit = function (req , res){
     if (err) {
       return err;
     }
-    console.log('Update Produit: ' + req.body );
+    console.log('Update Produit: ' + elem );
+     return res.send(elem);
   } );
 
-        return res.send(req.body);
+       
     })
 }
 
 const oneProduit = function (req , res){
-    elem =  req.context.produit.find({'id' : req.params.id},function(err){
+   req.context.produit.find({'id' : req.params.id},function(err,elem){
         if(err){
             return  err;
-        }
+        };
+
+    return res.send(elem);
     });
-      return res.send(elem);
+      
 }
 
 const liste_produit_boutique = function(req , res) {
 
-     elem =  req.context.produit.find({'shopid' : req.params.id},function(err){
+   req.context.produit.find({'shopid' : req.params.id},function(err,elem){
         if(err){
             return  err;
-        }
+        };
+        return res.send(elem);
     });
-      return res.send(elem);
+      
 }
 
 

@@ -24,7 +24,11 @@ var produitSchema = new Schema({
         require : true
 
     },
-    shopid : { type : Schema.Types.ObjectId , ref : 'Shop'}
+    shopid : {
+        type : Number,
+        require : true
+
+    }
 });
 
 

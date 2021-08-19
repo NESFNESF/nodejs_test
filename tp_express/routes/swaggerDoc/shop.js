@@ -12,7 +12,7 @@
 *  @swagger
 *   components:
 *     schemas:
-*       Shop:
+*       Boutique:
 *         type: object
 *         required:
 *           - name
@@ -45,10 +45,11 @@
 *             type: string
 *             description: La latitude
 *           categoriesList:
-*             type: string
-*             description: Tableau contenant les identifiants des categories
+*             type: array
+*             items : 
+*               type : integer
+*               description: identifiants des categories
 * 
-*          
 *         example:
 *            name: Boutique de cosmetique 
 *            description: ici tout vos produits cosmetiques
@@ -56,7 +57,7 @@
 *            ref: reference
 *            longitude: 23_56_56
 *            latitude: 34_56_24
-*            categoriesList: [1,2,3,4]
+*            categoryList: [1,2,3,4]
 * 
 */
 
@@ -74,7 +75,7 @@
 *           content:
 *             application/json:
 *               schema:
-*                 $ref: '#/components/schemas/shop'
+*                 $ref: '#/components/schemas/Boutique'
 *     post:
 *       summary: Création d'une nouvelle Boutique
 *       tags: [Boutique]
@@ -83,14 +84,14 @@
 *         content:
 *           application/json:
 *             schema:
-*               $ref: '#/components/schemas/shop'
+*               $ref: '#/components/schemas/Boutique'
 *       responses:
 *         "200":
 *           description: La nouvelle Boutique crée.
 *           content:
 *             application/json:
 *               schema:
-*                 $ref: '#/components/schemas/shop'
+*                 $ref: '#/components/schemas/Boutique'
 *   /shop/{id}:
 *     get:
 *       summary: Donne la Boutique dont l'identifiant est "id"
@@ -108,7 +109,7 @@
 *           content:
 *             application/json:
 *               schema:
-*                 $ref: '#/components/schemas/shop'
+*                 $ref: '#/components/schemas/Boutique'
 *         "404":
 *           description: Erreur.
 *     put:
@@ -126,7 +127,7 @@
 *         content:
 *           application/json:
 *             schema:
-*               $ref: '#/components/schemas/shop'
+*               $ref: '#/components/schemas/Boutique'
 *       responses:
 *         "204":
 *           description: Mise à jour reussi !.
@@ -148,7 +149,7 @@
 *         "404":
 *           description: Erreur.
 *
-*   //shop_by_category:
+*   /shop/shop_by_category:
 *     get:
 *       summary: Liste des boutiques par categories
 *       tags: [Boutique]
@@ -158,7 +159,7 @@
 *           content:
 *             application/json:
 *               schema:
-*                 $ref: '#/components/schemas/shop'
+*                 $ref: '#/components/schemas/Boutique'
 * 
 *   
 *  
